@@ -1,0 +1,26 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="pretty.css">
+    </head>
+    <body onclick="setMouseClick('left')" oncontextmenu="setMouseClick('right'); return false;">
+        <div id="startButton" class="startButton" onclick='start();'>
+            Push The Button!
+        </div>
+        <div class="main">
+            <div class="whiteBlock">
+                <div id="plus" class="plus">
+                    +
+                </div>
+                <div id="pictures" class="pictures">
+                    <div id="topPic" class="pic"></div>
+                    <div id="botPic" class="pic"></div>
+                </div>
+                <div id="probes" class="probes">
+                    <div id="topProbe" class="probe"></div>
+                    <div id="botProbe" class="probe"></div>
+                </div>
+            </div>
+        </div>
+    </body>
+    <script src="code.js"></script>
+</html>
