@@ -9,10 +9,14 @@ let mouseClicked = null;
 let probeLocation = null;
 
 let isStarted = false;
+const numberOfImages = 20
+const numOfRepetInHalf = 10
 
 showStep(0);
 
 function start() {
+
+    document.body.style.cursor = 'none';
     isStarted = true;
     loopIt();
 }
@@ -20,20 +24,37 @@ function start() {
 async function loopIt() {
     let delay = 500;
 
-    for (let i=0;i<160;i++) {
-        refreshPhotos();
-        showStep(1);
-        await sleep(delay);
-        showStep(2);
-        await sleep(delay);
-        setProbe();
-        showStep(3);
-        await waitForResponse();
-        showStep(4);
-        await sleep(delay);
+    for (let i=0 ; i<numOfRepetInHalf ; i++) {
+        await fullCircle(delay);
     }
-    isStarted = false;
+    startButton.innerText = "Well done.\n You Done half.\n\n Click here when you are ready to continue."
+    document.body.style.cursor = 'none';
     showStep(0);
+    await waitForResponse();
+    startButton.innerText = ''
+    for (let i=0 ; i<numOfRepetInHalf ; i++) {
+        await fullCircle(delay);
+    }
+    startButton.innerHTML = "Well done.\n You're done."
+    startButton.style.cursor = 'none';
+    showStep(0);
+    await waitForResponse();
+    startButton.disabled = true;
+    isStarted = false;
+}
+
+async function fullCircle(delay){
+    refreshPhotos();
+    showStep(1);
+    await sleep(delay);
+    showStep(2);
+    await sleep(delay);
+    setProbe();
+    showStep(3);
+    await waitForResponse();
+    showStep(4);
+    await sleep(delay);
+    
 }
 
 function setProbe() {
@@ -94,6 +115,8 @@ async function waitForResponse() {
             await sleep(100);
         }
         resolve(mouseClicked);
+        topProbe.innerHTML = '';
+        botProbe.innerHTML = '';
     });
 }
 
@@ -108,17 +131,17 @@ function refreshPhotos() {
     let botPicEle = document.getElementById('botPic');
 
 
-    let indexImg = getRndInteger(1, 5);
+    let indexImg = getRndInteger(1, numberOfImages + 1);
     let placeRnd = getRndInteger(0, 2);
 
     if (placeRnd == 0) {
-        topPicEle.style.backgroundImage = `url('images/neutral/${indexImg}.jpg')`;
-        botPicEle.style.backgroundImage = `url('images/angry/${indexImg}.jpg')`;
+        topPicEle.style.backgroundImage = `url('images/neutral/${indexImg}.jpeg')`;
+        botPicEle.style.backgroundImage = `url('images/angry/${indexImg}.jpeg')`;
         probeLocation = 'top';
     }
     else {
-        botPicEle.style.backgroundImage = `url('images/neutral/${indexImg}.jpg')`;
-        topPicEle.style.backgroundImage = `url('images/angry/${indexImg}.jpg')`;
+        botPicEle.style.backgroundImage = `url('images/neutral/${indexImg}.jpeg')`;
+        topPicEle.style.backgroundImage = `url('images/angry/${indexImg}.jpeg')`;
         probeLocation = 'bot';
     }
 }
