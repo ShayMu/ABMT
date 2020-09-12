@@ -1,6 +1,6 @@
 body {
     background-color: black;
-    /* cursor: none; */
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 
@@ -72,16 +72,14 @@ body {
     align-items: center;
 }
 
-.startButton {
-    width: 250px;
-    height: 100px;
-    position: absolute;
-    top: calc(50% - 100px / 2);
-    right: calc(50% - 250px / 2);
-    z-index: 100;
+.instructions {
+    line-height: 1.5;
+    padding: 10px;
+    direction: rtl;
+
+    flex: 1;
     display: flex;
     justify-content: center;
     align-items: center;
-    cursor: pointer;
     text-align: center;
 }

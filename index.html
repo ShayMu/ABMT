@@ -3,21 +3,39 @@
         <link rel="stylesheet" href="pretty.css">
     </head>
     <body onclick="setMouseClick('left')" oncontextmenu="setMouseClick('right'); return false;">
-        <div id="startButton" class="startButton" onclick='start();'>
-            Click here to start
-        </div>
         <div class="main">
             <div class="whiteBlock">
-                <div id="plus" class="plus">
-                    +
+                <div id="instructions" class="instructions" onclick='start();'>
+                    במטלה הבאה יופיעו שני פרצופים אחד מעל השני
+                    לאחר מכן יופיע הסימן < או > על המסך
+                    יש להגיב באמצעות לחיצה על אחד מלחצני העכבר (הימני או השמאלי) בהתאם לסימן שהופיע:
+                    עבור <  יש ללחוץ על המקש הימני
+                    עבור > יש ללחוץ על המקש השמאלי
+                    יש להגיב במהירות האפשרית תוך שמירה על דיוק בתגובה
+                    <br/>
+                    <br/>
+                    נא ללחוץ על המסך הלבן כדיי להתחיל
                 </div>
-                <div id="pictures" class="pictures">
-                    <div id="topPic" class="pic"></div>
-                    <div id="botPic" class="pic"></div>
+                <div id="activity" style="display: none;">
+                    <div id="plus" class="plus">
+                        +
+                    </div>
+                    <div id="pictures" class="pictures">
+                        <div id="topPic" class="pic"></div>
+                        <div id="botPic" class="pic"></div>
+                    </div>
+                    <div id="probes" class="probes">
+                        <div id="topProbe" class="probe"></div>
+                        <div id="botProbe" class="probe"></div>
+                    </div>
                 </div>
-                <div id="probes" class="probes">
-                    <div id="topProbe" class="probe"></div>
-                    <div id="botProbe" class="probe"></div>
+                <div id="midPause" class="instructions" style="display: none;">
+                    עצרנו לרגע, אפשר לקחת כוס מים :)
+                    <br/>
+                    בשביל להמשיך לחצו על המסך הלבן
+                </div>
+                <div id="finish" class="instructions" style="display: none;">
+                    איזה כיף! סיימנו!
                 </div>
             </div>
         </div>
