@@ -14,7 +14,7 @@ let mouseClicked = null;
 let probeLocation = null;
 
 const numberOfImages = 20;
-const numOfRepeats = 4;
+const numOfRepeats = 160;
 
 showInstructions();
 
