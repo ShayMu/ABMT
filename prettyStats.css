@@ -1,0 +1,27 @@
+.statsMain {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    line-height: 1.5;
+    margin: 0px 20px;
+}
+
+.calcStatInfo {
+}
+
+.sessionBreakdown {
+    flex: 1;
+    margin-top: 50px;
+    overflow: auto;
+}
+
+.sessionBreakdownItem {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    padding: 5px 0px;
+}
+
+.sessionBreakdownItem:hover {
+    background-color: aliceblue;
+}

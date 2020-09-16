@@ -1,0 +1,28 @@
+.popupMain {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    transition: opacity 1s;
+}
+
+.popupContent {
+    width: 800px;
+    height: 500px;
+    background-color: white;
+    transition: opacity 1s;
+    align-self: center;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.popupHide { 
+    opacity: 0;
+}
+
+.popupShow { 
+    opacity: 1;
+}
