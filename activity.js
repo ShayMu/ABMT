@@ -13,20 +13,26 @@ let finishDiv = document.getElementById('finish');
 let mouseClicked = null;
 let probeLocation = null;
 
+let currentRound = 0;
+let shouldLog = false;
+
 const numberOfImages = 20;
 const numOfRepeats = 160;
 
 showInstructions();
 
 function start() {
+    initSessionLog();
     loopIt();
 }
 
 async function loopIt() {
     let delay = 500;
     showActivity();
+    currentRound = 0;
 
     for (let i=0 ; i < numOfRepeats / 2 ; i++) {
+        currentRound++;
         await fullCircle(delay);
     }
 
@@ -35,6 +41,7 @@ async function loopIt() {
     showActivity();
 
     for (let i=0 ; i < numOfRepeats / 2 ; i++) {
+        currentRound++;
         await fullCircle(delay);
     }
 
@@ -104,6 +111,7 @@ function showInstructions() {
 }
 
 function showActivity() {
+    shouldLog = true;
     hideMouse();
     activityDiv.style.display = '';
     midPauseDiv.style.display = 'none';
@@ -112,6 +120,7 @@ function showActivity() {
 }
 
 function showMidPause() {
+    shouldLog = false;
     showMouse();
     activityDiv.style.display = 'none';
     midPauseDiv.style.display = '';
@@ -120,11 +129,14 @@ function showMidPause() {
 }
 
 function finish() {
+    shouldLog = false;
     showMouse();
     activityDiv.style.display = 'none';
     midPauseDiv.style.display = 'none';
     finishDiv.style.display = '';
     instructionsDiv.style.display = 'none';
+
+    saveSessionInfo();
 }
 
 function showMouse() {
@@ -141,10 +153,21 @@ function setMouseClick(btn) {
 
 async function waitForResponse() {
     mouseClicked = null;
+    let start = new Date().getTime();
     return new Promise(async resolve => {
         while(mouseClicked == null) {
-            await sleep(100);
+            await sleep(50);
         }
+
+        if (shouldLog) {
+            let end = new Date().getTime();
+
+            let currProbeDir = probeLocation == 'top'? topProbeDiv.innerText : botProbeDiv.innerText;
+            let isCorrect = (currProbeDir == '>' && mouseClicked == 'right') || (currProbeDir == '<' && mouseClicked == 'left');
+
+            logInfo(currentRound, end - start, isCorrect);
+        }
+
         resolve(mouseClicked);
         topProbeDiv.innerHTML = '';
         botProbeDiv.innerHTML = '';
