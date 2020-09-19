@@ -3,6 +3,7 @@
         <link rel="stylesheet" href="prettyActivity.css">
         <link rel="stylesheet" href="prettyStats.css">
         <link rel="stylesheet" href="prettyPopup.css">
+        <link rel="stylesheet" href="prettyMain.css">
     </head>
     <body onclick="setMouseClick('left')" oncontextmenu="setMouseClick('right'); return false;">
         <div class="main">
@@ -44,7 +45,10 @@
         <div id="statsPopup" class="popupMain" style="display: none;">
             <div id="statsPopupContent" class="popupContent popupHide">
                 <div class="statsMain">
-                    <h3 style="color: #2196F3;">Statistics is Fun!</h3>
+                    <div style="display: flex; flex-direction: row; justify-content: space-between;">
+                        <h3 style="color: #2196F3;">Statistics is Fun!</h3>
+                        <div class="button" onclick="downloadStats();">Get all sessions stats!</div>
+                    </div>
                     <div class="calcStatInfo">
                         <div>Avarage response time: <span id="avgResTime"></span> seconds!</div>
                         <div>You got <span id="correctCount"></span> / <span id="totalCount"></span> correct! (<span id="correctPercent"></span>%)</div>
