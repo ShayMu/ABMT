@@ -42,7 +42,7 @@
                 </div>
             </div>
         </div>
-        <div id="statsPopup" class="popupMain" style="display: none;">
+        <div id="statsPopup" class="popupMain" style="display: none; top: -1000px">
             <div id="statsPopupContent" class="popupContent popupHide">
                 <div class="statsMain">
                     <div style="display: flex; flex-direction: row; justify-content: space-between;">
@@ -50,6 +50,7 @@
                         <div class="button" onclick="downloadStats();">Get all sessions stats!</div>
                     </div>
                     <div class="calcStatInfo">
+                        <div>~ Showing last session stats ~</div>
                         <div>Avarage response time: <span id="avgResTime"></span> seconds!</div>
                         <div>You got <span id="correctCount"></span> / <span id="totalCount"></span> correct! (<span id="correctPercent"></span>%)</div>
                     </div>

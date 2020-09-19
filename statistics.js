@@ -86,10 +86,11 @@ function KeyPress(e) {
             // hiding popup
             statsPopupContentDiv.classList.remove('popupShow');
             statsPopupContentDiv.classList.add('popupHide');
+            statsPopupDiv.style.top = '-1000';
 
             setTimeout(()=>{
                 statsPopupDiv.style.display = 'none';
-            }, 1100);
+            }, 550);
         }
         else {
             // showing popup
@@ -98,6 +99,7 @@ function KeyPress(e) {
             setTimeout(()=>{
                 statsPopupContentDiv.classList.remove('popupHide');
                 statsPopupContentDiv.classList.add('popupShow');
+                statsPopupDiv.style.top = '0';
             }, 50);
 
         }
