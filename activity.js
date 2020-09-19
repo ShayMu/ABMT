@@ -12,12 +12,14 @@ let finishDiv = document.getElementById('finish');
 
 let mouseClicked = null;
 let probeLocation = null;
+let pictureIdx = null;
+let pictureType = null;
 
 let currentRound = 0;
 let shouldLog = false;
 
 const numberOfImages = 20;
-const numOfRepeats = 160;
+const numOfRepeats = 6;
 
 showInstructions();
 
@@ -165,7 +167,7 @@ async function waitForResponse() {
             let currProbeDir = probeLocation == 'top'? topProbeDiv.innerText : botProbeDiv.innerText;
             let isCorrect = (currProbeDir == '>' && mouseClicked == 'right') || (currProbeDir == '<' && mouseClicked == 'left');
 
-            logInfo(currentRound, end - start, isCorrect);
+            logInfo(currentRound, end - start, isCorrect, probeLocation, currProbeDir, pictureType, pictureIdx);
         }
 
         resolve(mouseClicked);
@@ -187,16 +189,19 @@ function refreshPhotos() {
 
     let indexImg = getRndInteger(1, numberOfImages + 1);
     let placeRnd = getRndInteger(0, 2);
+    pictureIdx = indexImg;
 
     if (placeRnd == 0) {
         topPicEle.style.backgroundImage = `url('images/neutral/${indexImg}.jpeg')`;
         botPicEle.style.backgroundImage = `url('images/angry/${indexImg}.jpeg')`;
         probeLocation = 'top';
+        pictureType = 'neutral';
     }
     else {
         botPicEle.style.backgroundImage = `url('images/neutral/${indexImg}.jpeg')`;
         topPicEle.style.backgroundImage = `url('images/angry/${indexImg}.jpeg')`;
         probeLocation = 'bot';
+        pictureType = 'neutral';
     }
 }
 

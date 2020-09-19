@@ -6,17 +6,21 @@
     height: 100%;
     display: flex;
     justify-content: center;
-    transition: opacity 1s;
+    transition: all 0.5s;
 }
 
 .popupContent {
     width: 800px;
     height: 500px;
     background-color: white;
-    transition: opacity 1s;
+    transition: opacity 0.5s;
     align-self: center;
     padding: 10px;
     border-radius: 5px;
+
+    -webkit-box-shadow: 3px 6px 40px -13px rgba(255,255,255,1);
+    -moz-box-shadow: 3px 6px 40px -13px rgba(255,255,255,1);
+    box-shadow: 3px 6px 40px -13px rgba(255,255,255,1);
 }
 
 .popupHide { 
