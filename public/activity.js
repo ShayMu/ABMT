@@ -22,6 +22,8 @@ const numberOfImages = 20;
 const numOfRepeats = 480;
 const delay = 500;
 
+const storage = firebase.app().storage('gs://abmt-7c76e.appspot.com').ref();
+
 showInstructions();
 
 function start() {
@@ -31,6 +33,7 @@ function start() {
 
 async function loopIt() {
     showActivity();
+    refreshPhotos();
     currentRound = 0;
 
     for (let i=0 ; i < numOfRepeats / 2 ; i++) {
@@ -51,13 +54,13 @@ async function loopIt() {
 }
 
 async function fullCircle(){
-    refreshPhotos();
     showStep(1);
     await sleep(delay);
     showStep(2);
     await sleep(delay);
     setProbe();
     showStep(3);
+    refreshPhotos();
     await waitForResponse();
     showStep(4);
     await sleep(delay);
@@ -190,15 +193,21 @@ function refreshPhotos() {
     let placeRnd = getRndInteger(0, 2);
     pictureIdx = indexImg;
 
+    storage.child(`images/angry/${indexImg}.jpeg`).getDownloadURL().then(url => {
+        if (placeRnd == 0) botPicEle.style.backgroundImage = `url('${url}')`;
+        else topPicEle.style.backgroundImage = `url('${url}')`;
+    });
+
+    storage.child(`images/neutral/${indexImg}.jpeg`).getDownloadURL().then(url => {
+        if (placeRnd == 0) topPicEle.style.backgroundImage = `url('${url}')`;
+        else botPicEle.style.backgroundImage = `url('${url}')`;
+    });
+
     if (placeRnd == 0) {
-        topPicEle.style.backgroundImage = `url('images/neutral/${indexImg}.jpeg')`;
-        botPicEle.style.backgroundImage = `url('images/angry/${indexImg}.jpeg')`;
         probeLocation = 'top';
         pictureType = 'neutral';
     }
     else {
-        botPicEle.style.backgroundImage = `url('images/neutral/${indexImg}.jpeg')`;
-        topPicEle.style.backgroundImage = `url('images/angry/${indexImg}.jpeg')`;
         probeLocation = 'bot';
         pictureType = 'neutral';
     }
