@@ -19,7 +19,7 @@ let currentRound = 0;
 let shouldLog = false;
 
 const numberOfImages = 20;
-const numOfRepeats = 6;
+const numOfRepeats = 480;
 
 showInstructions();
 
