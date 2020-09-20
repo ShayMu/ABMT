@@ -20,6 +20,7 @@ let shouldLog = false;
 
 const numberOfImages = 20;
 const numOfRepeats = 480;
+const delay = 500;
 
 showInstructions();
 
@@ -29,13 +30,12 @@ function start() {
 }
 
 async function loopIt() {
-    let delay = 500;
     showActivity();
     currentRound = 0;
 
     for (let i=0 ; i < numOfRepeats / 2 ; i++) {
         currentRound++;
-        await fullCircle(delay);
+        await fullCircle();
     }
 
     showMidPause();
@@ -44,13 +44,13 @@ async function loopIt() {
 
     for (let i=0 ; i < numOfRepeats / 2 ; i++) {
         currentRound++;
-        await fullCircle(delay);
+        await fullCircle();
     }
 
     finish();
 }
 
-async function fullCircle(delay){
+async function fullCircle(){
     refreshPhotos();
     showStep(1);
     await sleep(delay);
@@ -185,7 +185,6 @@ async function sleep(ms) {
 function refreshPhotos() {
     let topPicEle = document.getElementById('topPic');
     let botPicEle = document.getElementById('botPic');
-
 
     let indexImg = getRndInteger(1, numberOfImages + 1);
     let placeRnd = getRndInteger(0, 2);
