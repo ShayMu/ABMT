@@ -22,8 +22,7 @@ const numberOfImages = 20;
 const numOfRepeats = 480;
 const delay = 500;
 
-const storage = firebase.app().storage('gs://abmt-7c76e.appspot.com').ref();
-
+refreshPhotos();
 showInstructions();
 
 function start() {
@@ -33,7 +32,6 @@ function start() {
 
 async function loopIt() {
     showActivity();
-    refreshPhotos();
     currentRound = 0;
 
     for (let i=0 ; i < numOfRepeats / 2 ; i++) {
@@ -193,12 +191,12 @@ function refreshPhotos() {
     let placeRnd = getRndInteger(0, 2);
     pictureIdx = indexImg;
 
-    storage.child(`images/angry/${indexImg}.jpeg`).getDownloadURL().then(url => {
+    getImage(`images/angry/${indexImg}.jpeg`).then(url => {
         if (placeRnd == 0) botPicEle.style.backgroundImage = `url('${url}')`;
         else topPicEle.style.backgroundImage = `url('${url}')`;
     });
 
-    storage.child(`images/neutral/${indexImg}.jpeg`).getDownloadURL().then(url => {
+    getImage(`images/neutral/${indexImg}.jpeg`).then(url => {
         if (placeRnd == 0) topPicEle.style.backgroundImage = `url('${url}')`;
         else botPicEle.style.backgroundImage = `url('${url}')`;
     });

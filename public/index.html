@@ -4,10 +4,14 @@
         <link rel="stylesheet" href="prettyStats.css">
         <link rel="stylesheet" href="prettyPopup.css">
         <link rel="stylesheet" href="prettyMain.css">
+
+        <script src="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.js"></script>
+        <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css" />
         <meta charset="UTF-8">
     </head>
     <body onclick="setMouseClick('left')" oncontextmenu="setMouseClick('right'); return false;">
-        <div class="main">
+        <div id="firebaseui-auth-container" class="signin"></div>
+        <div class="main" style="display: none;">
             <div class="whiteBlock">
                 <div id="instructions" class="instructions" onclick='start();'>
                     במטלה הבאה יופיע הסימן + ואחריו שני פרצופים אחד מעל השני,
@@ -77,9 +81,12 @@
         https://firebase.google.com/docs/web/setup#available-libraries -->
     <script src="/__/firebase/7.21.0/firebase-analytics.js"></script>
     <script src="/__/firebase/7.21.0/firebase-storage.js"></script>
+    <script src="/__/firebase/7.21.0/firebase-auth.js"></script>
 
     <!-- Initialize Firebase -->
     <script src="/__/firebase/init.js"></script>
+
+    <script src="firebase.js"></script>
     <script src="activity.js"></script>
     <script src="statistics.js"></script>
 </html>

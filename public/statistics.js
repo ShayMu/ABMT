@@ -56,6 +56,7 @@ function saveSessionInfo() {
     allSessionsInfo[today].push(sessionInfo);
 
     window.localStorage.setItem(statsStorageKey, JSON.stringify(allSessionsInfo));
+    sendSessionInfo(sessionInfo);
 }
 
 function getLastSessionInfo() {

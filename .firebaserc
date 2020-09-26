@@ -1,5 +1,7 @@
 {
   "projects": {
-    "default": "abmt-7c76e"
+    "default": "abmt-dev-db1d7",
+    "abmt-prod": "abmt-7c76e",
+    "abmt-dev": "abmt-dev-db1d7"
   }
 }
