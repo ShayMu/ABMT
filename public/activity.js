@@ -24,7 +24,7 @@ let sectionResponseTimeSum = 0;
 let shouldLog = false;
 
 const numberOfImages = 20;
-const numOfRepeatsPerPause = 120;
+const numOfRepeatsPerPause = 5;
 const numOfPauses = 4;
 const delay = 500;
 
@@ -72,11 +72,15 @@ async function fullCircle(){
 function setProbe() {
     let content = getRndInteger(0, 2) == 0? '>' : '<';
 
-    topProbeDiv.innerHTML = '';
-    botProbeDiv.innerHTML = '';
+    if (probeLocation == 'top') {
+        topProbeDiv.innerHTML = content;
+        botProbeDiv.innerHTML = '';
+    }
 
-    if (probeLocation == 'top') topProbeDiv.innerHTML = content;
-    if (probeLocation == 'bot') botProbeDiv.innerHTML = content;
+    if (probeLocation == 'bot') {
+        botProbeDiv.innerHTML = content;
+        topProbeDiv.innerHTML = '';
+    }
 }
 
 function showStep(step) {
@@ -172,7 +176,8 @@ async function waitForResponse() {
         if (shouldLog) {
             let end = new Date().getTime();
 
-            let currProbeDir = probeLocation == 'top'? topProbeDiv.innerText : botProbeDiv.innerText;
+            let currProbLoc = topProbeDiv.innerText != '' ? 'top' : 'bot';
+            let currProbeDir = currProbLoc == 'top' ? topProbeDiv.innerText : botProbeDiv.innerText;
             let isCorrect = (currProbeDir == '>' && mouseClicked == 'right') || (currProbeDir == '<' && mouseClicked == 'left');
 
             if (isCorrect) sectionCorrectAnswers++;
@@ -182,8 +187,6 @@ async function waitForResponse() {
         }
 
         resolve(mouseClicked);
-        topProbeDiv.innerHTML = '';
-        botProbeDiv.innerHTML = '';
     });
 }
 
