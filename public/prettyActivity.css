@@ -82,3 +82,8 @@ body {
     align-items: center;
     text-align: center;
 }
+
+.midPause {
+    flex-direction: column;
+    justify-content: space-around;
+}

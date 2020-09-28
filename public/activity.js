@@ -8,6 +8,9 @@ let topProbeDiv = document.getElementById('topProbe');
 let botProbeDiv = document.getElementById('botProbe');
 
 let midPauseDiv = document.getElementById('midPause');
+let midPauseAvgDiv = document.getElementById('pauseAvgResTime');
+let midPauseResDiv = document.getElementById('pauseResults');
+
 let finishDiv = document.getElementById('finish');
 
 let mouseClicked = null;
@@ -16,10 +19,13 @@ let pictureIdx = null;
 let pictureType = null;
 
 let currentRound = 0;
+let sectionCorrectAnswers = 0;
+let sectionResponseTimeSum = 0;
 let shouldLog = false;
 
 const numberOfImages = 20;
-const numOfRepeats = 480;
+const numOfRepeatsPerPause = 120;
+const numOfPauses = 4;
 const delay = 500;
 
 refreshPhotos();
@@ -31,21 +37,19 @@ function start() {
 }
 
 async function loopIt() {
-    showActivity();
     currentRound = 0;
 
-    for (let i=0 ; i < numOfRepeats / 2 ; i++) {
-        currentRound++;
-        await fullCircle();
-    }
+    for (let i=0; i < numOfPauses; i++) {
+        showActivity();
+        sectionCorrectAnswers = 0;
+        sectionResponseTimeSum = 0;
+        for (let j=0 ; j < numOfRepeatsPerPause ; j++) {
+            currentRound++;
+            await fullCircle();
+        }
 
-    showMidPause();
-    await waitForResponse();
-    showActivity();
-
-    for (let i=0 ; i < numOfRepeats / 2 ; i++) {
-        currentRound++;
-        await fullCircle();
+        showMidPause();
+        await waitForResponse();
     }
 
     finish();
@@ -129,6 +133,9 @@ function showMidPause() {
     midPauseDiv.style.display = '';
     finishDiv.style.display = 'none';
     instructionsDiv.style.display = 'none';
+
+    midPauseAvgDiv.innerText = `${sectionResponseTimeSum / numOfRepeatsPerPause} מילישניות`;
+    midPauseResDiv.innerText = `${sectionCorrectAnswers} מתוך ${numOfRepeatsPerPause} (%${sectionCorrectAnswers / numOfRepeatsPerPause * 100})`;
 }
 
 function finish() {
@@ -167,6 +174,9 @@ async function waitForResponse() {
 
             let currProbeDir = probeLocation == 'top'? topProbeDiv.innerText : botProbeDiv.innerText;
             let isCorrect = (currProbeDir == '>' && mouseClicked == 'right') || (currProbeDir == '<' && mouseClicked == 'left');
+
+            if (isCorrect) sectionCorrectAnswers++;
+            sectionResponseTimeSum += (end - start);
 
             logInfo(currentRound, end - start, isCorrect, probeLocation, currProbeDir, pictureType, pictureIdx);
         }
