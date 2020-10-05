@@ -28,7 +28,10 @@ const numOfRepeatsPerPause = 5;
 const numOfPauses = 4;
 const delay = 500;
 
-refreshPhotos();
+const neutralImages = [];
+const negativeImages = [];
+
+loadAllImages();
 showInstructions();
 
 function start() {
@@ -56,13 +59,13 @@ async function loopIt() {
 }
 
 async function fullCircle(){
+    refreshPhotos();
     showStep(1);
     await sleep(delay);
     showStep(2);
     await sleep(delay);
     setProbe();
     showStep(3);
-    refreshPhotos();
     await waitForResponse();
     showStep(4);
     await sleep(delay);
@@ -138,8 +141,8 @@ function showMidPause() {
     finishDiv.style.display = 'none';
     instructionsDiv.style.display = 'none';
 
-    midPauseAvgDiv.innerText = `${sectionResponseTimeSum / numOfRepeatsPerPause} מילישניות`;
-    midPauseResDiv.innerText = `${sectionCorrectAnswers} מתוך ${numOfRepeatsPerPause} (%${sectionCorrectAnswers / numOfRepeatsPerPause * 100})`;
+    midPauseAvgDiv.innerText = `${(sectionResponseTimeSum / numOfRepeatsPerPause).toFixed(0)} מילישניות`;
+    midPauseResDiv.innerText = `${sectionCorrectAnswers} מתוך ${numOfRepeatsPerPause} (${(sectionCorrectAnswers / numOfRepeatsPerPause * 100).toFixed(0)}%)`;
 }
 
 function finish() {
@@ -183,7 +186,7 @@ async function waitForResponse() {
             if (isCorrect) sectionCorrectAnswers++;
             sectionResponseTimeSum += (end - start);
 
-            logInfo(currentRound, end - start, isCorrect, probeLocation, currProbeDir, pictureType, pictureIdx);
+            logInfo(currentRound, end - start, isCorrect, currProbLoc, currProbeDir, pictureType, pictureIdx);
         }
 
         resolve(mouseClicked);
@@ -201,27 +204,44 @@ function refreshPhotos() {
     let botPicEle = document.getElementById('botPic');
 
     let indexImg = getRndInteger(1, numberOfImages + 1);
+
+    while (!negativeImages[indexImg] || !neutralImages[indexImg]) {
+        indexImg = getRndInteger(1, numberOfImages + 1);
+    }
+
+
     let placeRnd = getRndInteger(0, 2);
     pictureIdx = indexImg;
 
-    getImage(`images/angry/${indexImg}.jpeg`).then(url => {
-        if (placeRnd == 0) botPicEle.style.backgroundImage = `url('${url}')`;
-        else topPicEle.style.backgroundImage = `url('${url}')`;
-    });
-
-    getImage(`images/neutral/${indexImg}.jpeg`).then(url => {
-        if (placeRnd == 0) topPicEle.style.backgroundImage = `url('${url}')`;
-        else botPicEle.style.backgroundImage = `url('${url}')`;
-    });
-
     if (placeRnd == 0) {
+        botPicEle.src = negativeImages[indexImg].src;
+        topPicEle.src = neutralImages[indexImg].src;
         probeLocation = 'top';
         pictureType = 'neutral';
     }
     else {
+        topPicEle.src = negativeImages[indexImg].src;
+        botPicEle.src = neutralImages[indexImg].src;
         probeLocation = 'bot';
         pictureType = 'neutral';
     }
+}
+
+async function loadAllImages() {
+    return new Promise(async resolve => {
+        for (let i=0; i<numberOfImages; i++) {
+            let indexImg = i + 1;
+            let url = await getImage(`images/angry/${indexImg}.jpeg`);
+            negativeImages[i] = new Image();
+            negativeImages[i].src = url;
+
+            url = await getImage(`images/neutral/${indexImg}.jpeg`);
+            neutralImages[i] = new Image();
+            neutralImages[i].src = url;
+        }
+
+        resolve();
+    });
 }
 
 function getRndInteger(min, max) {

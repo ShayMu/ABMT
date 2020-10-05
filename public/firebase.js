@@ -35,12 +35,11 @@ function sendSessionInfo(info) {
     const Http = new XMLHttpRequest();
     const url = server + 'saveSessionInfo';
     Http.open("POST", url);
-    xhr.setRequestHeader("Content-Type", "application/json");
-    Http.send({
+    Http.setRequestHeader("Content-Type", "application/json");
+    Http.send(JSON.stringify({
         session: info,
-        email: userEmail,
-        date: new Date().toLocaleDateString('en-GB')
-    });
+        email: userEmail
+    }));
 
     Http.onreadystatechange = (e) => {
         console.log(Http.responseText);
