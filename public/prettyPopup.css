@@ -23,6 +23,11 @@
     box-shadow: 3px 6px 40px -13px rgba(255,255,255,1);
 }
 
+.popupContentSmall {
+    width: 200px;
+    height: 100px;
+}
+
 .popupHide { 
     opacity: 0;
 }

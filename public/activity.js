@@ -203,15 +203,14 @@ function refreshPhotos() {
     let topPicEle = document.getElementById('topPic');
     let botPicEle = document.getElementById('botPic');
 
-    let indexImg = getRndInteger(1, numberOfImages + 1);
+    let indexImg = getRndInteger(0, numberOfImages - 1);
 
     while (!negativeImages[indexImg] || !neutralImages[indexImg]) {
-        indexImg = getRndInteger(1, numberOfImages + 1);
+        indexImg = getRndInteger(0, numberOfImages - 1);
     }
 
-
     let placeRnd = getRndInteger(0, 2);
-    pictureIdx = indexImg;
+    pictureIdx = indexImg + 1;
 
     if (placeRnd == 0) {
         botPicEle.src = negativeImages[indexImg].src;
@@ -228,20 +227,41 @@ function refreshPhotos() {
 }
 
 async function loadAllImages() {
+    document.getElementsByClassName('whiteBlock')[0].style.display = 'none';
     return new Promise(async resolve => {
+
+        let loadedCount = 0;
+
         for (let i=0; i<numberOfImages; i++) {
             let indexImg = i + 1;
             let url = await getImage(`images/angry/${indexImg}.jpeg`);
             negativeImages[i] = new Image();
+            negativeImages[i].onload = () => {
+                updateLoader((++loadedCount / (numberOfImages * 2) * 100));
+            };
             negativeImages[i].src = url;
 
             url = await getImage(`images/neutral/${indexImg}.jpeg`);
             neutralImages[i] = new Image();
+            neutralImages[i].onload = () => {
+                updateLoader((++loadedCount / (numberOfImages * 2) * 100));
+            };
             neutralImages[i].src = url;
+
+            await sleep(100);
         }
 
         resolve();
     });
+}
+
+function updateLoader(percent) {
+    document.getElementById('loadingValue').innerText = (percent + 40);
+
+    if (percent >= 60) {
+        document.getElementById('loadingPopup').style.display = 'none';
+        document.getElementsByClassName('whiteBlock')[0].style.display = '';
+    }
 }
 
 function getRndInteger(min, max) {
