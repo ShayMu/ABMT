@@ -7,8 +7,7 @@ class Sessions {
         this.collection = conn.collection('sessions');
     }
 
-    async addSession({email, session}) {
-        let timestamp = utils.toDBTimestamp(new Date());
+    async addSession({email, session, timestamp}) {
         return this.collection.doc().set({timestamp, email, session});
     }
 
