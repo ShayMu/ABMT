@@ -97,7 +97,12 @@
     <!-- Initialize Firebase -->
     <script src="/__/firebase/init.js"></script>
 
-    <script src="firebase.js"></script>
-    <script src="activity.js"></script>
-    <script src="statistics.js"></script>
+
+    <script type="text/javascript">
+        let time = new Date().getTime();
+
+        document.write(`<script type="text/javascript" src="firebase.js?t=${time}"></${"script"}>`);
+        document.write(`<script type="text/javascript" src="activity.js?t=${time}"></${"script"}>`);
+        document.write(`<script type="text/javascript" src="statistics.js?t=${time}"></${"script"}>`);
+    </script>
 </html>
