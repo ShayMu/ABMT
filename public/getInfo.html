@@ -1,0 +1,44 @@
+<html>
+    <body>
+        
+    </body>
+    <script>
+
+        function getParameterByName(name, url) {
+            if (!url) url = window.location.href;
+            name = name.replace(/[\[\]]/g, '\\$&');
+            var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+                results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, ' '));
+        }
+
+        function x() {
+            const Http = new XMLHttpRequest();
+            const url = `https://us-central1-abmt-7c76e.cloudfunctions.net/getUserSessions`;
+            Http.open("POST", url);
+            Http.setRequestHeader("Content-Type", "application/json");
+            Http.send(JSON.stringify({
+                email: getParameterByName('email')
+            }));
+
+            Http.onreadystatechange = (e) => {
+                if (Http.readyState == 4 && Http.status == 200) {
+                    let element = document.createElement('a');
+                    element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(Http.responseText));
+                    element.setAttribute('download', 'userInfo.csv');
+
+                    element.style.display = 'none';
+                    document.body.appendChild(element);
+
+                    element.click();
+
+                    document.body.removeChild(element);
+                }
+            }
+        }
+
+        x();
+    </script>
+</html>

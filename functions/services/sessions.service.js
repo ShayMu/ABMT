@@ -1,4 +1,5 @@
 const db = require('../db/db.index');
+const utils = require('../utils');
 
 class SessionsService {
     constructor() {

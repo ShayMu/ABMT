@@ -18,7 +18,7 @@ exports.saveSessionInfo = functions.https.onRequest((req, res) => {
 
 exports.getUserSessions = functions.https.onRequest((req, res) => {
   cors(req, res, async () => {
-    let { email } = req.query;
+    let { email } = req.body;
 
     let result = [];
     if (email) result = await sessionsService.getSessions(email);
