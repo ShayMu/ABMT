@@ -16,12 +16,11 @@ exports.saveSessionInfo = functions.https.onRequest((req, res) => {
   });
 });
 
-exports.getUserSessions = functions.https.onRequest((req, res) => {
+exports.getSessions = functions.https.onRequest((req, res) => {
   cors(req, res, async () => {
     let { email } = req.body;
 
-    let result = [];
-    if (email) result = await sessionsService.getSessions(email);
+    let result = await sessionsService.getSessions(email);
     res.send(sessionsService.convertSessionsToCSV(result));
   });
 });

@@ -17,17 +17,16 @@
         function x() {
             const Http = new XMLHttpRequest();
             const url = `https://us-central1-abmt-7c76e.cloudfunctions.net/getUserSessions`;
+            const email = getParameterByName('email');
             Http.open("POST", url);
             Http.setRequestHeader("Content-Type", "application/json");
-            Http.send(JSON.stringify({
-                email: getParameterByName('email')
-            }));
+            Http.send(JSON.stringify({ email }));
 
             Http.onreadystatechange = (e) => {
                 if (Http.readyState == 4 && Http.status == 200) {
                     let element = document.createElement('a');
                     element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(Http.responseText));
-                    element.setAttribute('download', 'userInfo.csv');
+                    element.setAttribute('download', `userInfo-${email || 'all'}.csv`);
 
                     element.style.display = 'none';
                     document.body.appendChild(element);

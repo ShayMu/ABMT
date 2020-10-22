@@ -12,7 +12,8 @@ class Sessions {
     }
 
     async getSessions(email) {
-        let query = this.collection.where('email', '==', email);
+        let query = this.collection;
+        if (email) query = query.where('email', '==', email);
 
         let dbData = await query.get();
 
