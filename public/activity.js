@@ -24,8 +24,8 @@ let sectionResponseTimeSum = 0;
 let shouldLog = false;
 
 const numberOfImages = 20;
-const numOfRepeatsPerPause = 160;
-const numOfPauses = 1;
+const numOfRepeatsPerPause = 80;
+const numOfPauses = 2;
 const delay = 500;
 
 const neutralImages = [];
