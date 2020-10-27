@@ -16,7 +16,7 @@
 
         function x() {
             const Http = new XMLHttpRequest();
-            const url = `https://us-central1-abmt-7c76e.cloudfunctions.net/getUserSessions`;
+            const url = `https://us-central1-abmt-7c76e.cloudfunctions.net/getSessions`;
             const email = getParameterByName('email');
             Http.open("POST", url);
             Http.setRequestHeader("Content-Type", "application/json");
