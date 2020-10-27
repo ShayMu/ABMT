@@ -19,10 +19,9 @@ class SessionsService {
 
         let csvContent = '';
         for (let s of sessions) {
-            csvContent += '\r\n';
-            csvContent += `${s.email},${s.date.toISOString()},`;
+            csvContent += '\r\n';  
             for (let r of s.session) {
-                csvContent += `${r.roundNum},${r.isCorrect},${r.responseTime},${r.pictureId},${r.probeBehind},${r.probePos},${r.probeDir}\r\n,,`;
+                csvContent += `${s.email},${s.date.toISOString()},${r.roundNum},${r.isCorrect},${r.responseTime},${r.pictureId},${r.probeBehind},${r.probePos},${r.probeDir}\r\n`;
             }
             csvContent = csvContent.substr(0, csvContent.length - 2);
         }
