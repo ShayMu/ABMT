@@ -16,13 +16,14 @@ class Sessions {
         if (email) query = query.where('email', '==', email);
 
         let dbData = await query.get();
-
-        return dbData.docs.map(doc => {
+        let convertedData = dbData.docs.map(doc => {
             let data = doc.data();
             data.date = utils.fromDBTimestamp(data.timestamp);
             delete data.timestamp;
             return data;
         });
+
+        return convertedData.sort((a, b) => a.date.getTime() - b.date.getTime());
     }
 }
 
