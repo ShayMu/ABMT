@@ -24,3 +24,7 @@ exports.getSessions = functions.https.onRequest((req, res) => {
     res.send(sessionsService.convertSessionsToCSV(result));
   });
 });
+
+exports.updateSessionNum = functions.https.onRequest(async (req, res) => {
+  res.send(await sessionsService.updateSessionNum());
+});
