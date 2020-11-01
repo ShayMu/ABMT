@@ -10,18 +10,22 @@ class SessionsService {
         return db.sessions.addSession({timestamp, email, session});
     }
 
+    async updateSessionNum() {
+        return db.sessions.updateSessionNum();
+    }
+
     async getSessions(email) {
         return db.sessions.getSessions(email);
     }
 
     convertSessionsToCSV(sessions) {
-        const headline = 'Email, Date, Round, Is Correct, Response Time, Picture Id, Probe Behind, Probe Position, Probe Direction';
+        const headline = 'Email,Date,Session Number,Round,Is Correct,Response Time,Picture Id,Probe Behind,Probe Position,Probe Direction';
 
         let csvContent = '';
         for (let s of sessions) {
             csvContent += '\r\n';  
             for (let r of s.session) {
-                csvContent += `${s.email},${s.date.toISOString()},${r.roundNum},${r.isCorrect},${r.responseTime},${r.pictureId},${r.probeBehind},${r.probePos},${r.probeDir}\r\n`;
+                csvContent += `${s.email},${s.date.toISOString()},${s.sessionNum},${r.roundNum},${r.isCorrect},${r.responseTime},${r.pictureId},${r.probeBehind},${r.probePos},${r.probeDir}\r\n`;
             }
             csvContent = csvContent.substr(0, csvContent.length - 2);
         }
